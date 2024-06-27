@@ -18,19 +18,40 @@
           </tr>
         </thead>
         <tbody>
-          {% for aux in lista %}
-              <tr>
-                  <td>{{ aux.cliente }}</td>
-                  <td>{{ aux.servicio }}</td>
-                  <td>${{ aux.servicio.precio }}</td>
-                  <td>{{ aux.mecanico }}</td>
-                  <td>{{ aux.patente_vehiculo }} </td>
-                  <td>{{ aux.fecha_servicio }} </td>
-                  <td>{{ aux.comentarios }} </td>
-              </tr>
+          {% for aux in page_obj %}
+          <tr>
+            <td>{{ aux.cliente }}</td>
+            <td>{{ aux.servicio }}</td>
+            <td>${{ aux.servicio.precio }}</td>
+            <td>{{ aux.mecanico }}</td>
+            <td>{{ aux.patente_vehiculo }} </td>
+            <td>{{ aux.fecha_servicio }} </td>
+            <td>{{ aux.comentarios }} </td>
+          </tr>
           {% endfor %}
         </tbody>
       </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+           {% if page_obj.has_previous %}
+           <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primera</a></li>
+           <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">Anterior</a></li>
+           {% endif %}
+  
+           {% for num in page_obj.paginator.page_range %}
+           {% if page_obj.number == num %}
+           <li class="page-item active"><a class="page-link" href="#">{{ num }}</a></li>
+           {% elif num > page_obj.number|add:'-5' and num < page_obj.number|add:'5' %}
+           <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+           {% endif %}
+           {% endfor %}
+  
+           {% if page_obj.has_next %}
+           <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">Siguiente</a></li>
+           <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Última &raquo;</a></li>
+           {% endif %}
+        </ul>
+     </nav>
       <a href="{% url 'booking' %}" class="nav-item nav-link active">Agregar otra consulta</a>
       
 </div>

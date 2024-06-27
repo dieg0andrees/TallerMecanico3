@@ -111,6 +111,8 @@ def listar_consultas(request):
     # Obtener el usuario logueado
     user = request.user
 
+
+
     try:
         # Intentar obtener el cliente asociado al usuario
         cliente = Cliente.objects.get(user=user)
@@ -119,9 +121,14 @@ def listar_consultas(request):
     except Cliente.DoesNotExist:
         # Si no hay cliente asociado, mostrar todos los servicios
         consultas = Mecanico_servicio.objects.all()
+    
+    paginator = Paginator(consultas, 10) #Nos muestra 10 digimons x página
+    page_number = request.GET.get('page') #Busca la página
+    page_obj = paginator.get_page(page_number)
 
     aux = {
-        'lista': consultas
+        'lista': consultas,
+        'page_obj' : page_obj
     }
 
     return render(request, 'core/consultas.html', aux)
