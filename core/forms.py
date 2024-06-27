@@ -29,6 +29,8 @@ class ServicioForm(ModelForm):
         fields = '__all__'   
 
 class CustomUserCreationForm(UserCreationForm):
+    captcha = ReCaptchaField()
+    
     rut_cliente = forms.CharField(max_length=12)
     nombre = forms.CharField(max_length=50)
     apellido = forms.CharField(max_length=50)
