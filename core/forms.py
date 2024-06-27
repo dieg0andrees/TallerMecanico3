@@ -17,12 +17,13 @@ class EmpleadoForm(ModelForm):
         fields = '__all__'
 
 class TipoEmpleadoForm(ModelForm):
-
+    captcha = ReCaptchaField()
     class Meta:
         model = TipoEmpleado
         fields = '__all__'
 
 class ServicioForm(ModelForm):
+    captcha = ReCaptchaField()
     class Meta:
         model = Servicio
         fields = '__all__'   
